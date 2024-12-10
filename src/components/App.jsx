@@ -29,7 +29,12 @@ function App() {
   const [displayAddFriend, setDisplayAddFriend] = useState(false)
   const[selectedFriendId, setSelectedFriendId] = useState(null)
   const [friends, setFriends ]= useState(initialFriends)
-  const[curFriendName, setCurFriendName] = useState("John")
+  const[curFriend, setCurFriend] = useState({
+    id:'',
+    name:'',
+    image:'',
+    balance:0
+  })
  
 
 function handleToggleAddFriend(){
@@ -46,27 +51,33 @@ setDisplayAddFriend(false)
 
 }
 
-function handleSplitBill(id){
+function handleSelectFriend(id){
 
   const foundFriend = friends.find(friend => friend.id === id)
   setSelectedFriendId(id)
 
-  setCurFriendName(foundFriend?.name || 'John')
+  setCurFriend(foundFriend)
 
   setDisplayAddFriend(false)
+}
+
+function handleSplitBill(value){
+
+  setFriends(friends.map(friend => friend.id === selectedFriendId?{...friend, balance: friend.balance + value}: friend ))
+  setSelectedFriendId(null)
 }
 
   return (
     <div className="app">
       <div className="sidebar">
-          <Friends friends={friends} onClick={handleSplitBill} selectedFriendId={selectedFriendId}/>
+          <Friends friends={friends} onClick={handleSelectFriend} selectedFriendId={selectedFriendId}/>
 
          {displayAddFriend && <AddFriendForm onAddFriend={handleAddFriend} />}
 
 
           <Button onClick={handleToggleAddFriend}>{displayAddFriend ? "close" : "Add friend"}</Button>
       </div>
-          {selectedFriendId && <SplitTheBillForm friend={curFriendName} />}
+          {selectedFriendId && <SplitTheBillForm friend={curFriend} onSplit={handleSplitBill}/>}
     </div>
 
   )
