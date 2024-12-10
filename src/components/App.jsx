@@ -1,4 +1,5 @@
 // import { useState } from 'react'
+import { useState } from "react";
 import AddFriendForm from "./AddFriendForm";
 import Button from "./Button";
 import Friends from "./Friends";
@@ -25,16 +26,21 @@ const initialFriends = [
 ];
 
 function App() {
+  const [displayed, setDisplayed] = useState(false)
+function handleToggleAddFriend(){
+  setDisplayed(!displayed)
+  console.log(displayed)
+}
 
   return (
     <div className="app">
       <div className="sidebar">
           <Friends friends={initialFriends}/>
 
-          <AddFriendForm/>
+         {displayed && <AddFriendForm/>}
 
-          <Button >Add friend</Button>
 
+          <Button onClick={handleToggleAddFriend}>{displayed? "close":"Add friend"}</Button>
       </div>
            <SplitTheBillForm />
     </div>

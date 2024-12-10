@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-export default function Button({children}){
+export default function Button({children, onClick}){
     return(
-        <button className="button">{children}</button>
+        <button className="button" onClick={onClick}>{children}</button>
     )
 }
