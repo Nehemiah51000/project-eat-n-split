@@ -12,7 +12,7 @@ export default function Friend({friend, onClick, selectedFriendId}){
         { friend.balance === 0 && `You and ${friend.name } are even`}
         </p> 
 
-        <Button onClick={()=> onClick(friend.id)}>Select</Button>
+        <Button onClick={()=> selectedFriendId === friend.id? onClick(!friend.id): onClick(friend.id)}>{selectedFriendId === friend.id? "Close":"Select"}</Button>
   </li>
     )
 }
